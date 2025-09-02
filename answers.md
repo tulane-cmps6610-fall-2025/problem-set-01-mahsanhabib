@@ -261,7 +261,13 @@ $g(n) \in o(f(n))$ means that for **every** positive constant $c$, there exists 
 
   - 3e. Assume that we parallelize in a similar way we did with *sum_list_recursive*. That is, each recursive call spawns a new thread. What is the Work and Span of this algorithm?
     - ***Answer***
-      - By parallelizing the function, I think the work and span should be the same as 3d. As per definition of work, we only have one processor to complete the task, so parallelization doesn't benifit here. On the other hand, the span is calculated while considering the as many processor as it requires by definition. So, both are same. That means, 
+      - By parallelizing the function, I think the work should be the same as 3d. As per definition of work, we only have one processor to complete the task, so parallelization doesn't benifit here. That means,   
         - $W(n) = 2 \cdot W(n/2) + c  = O(n)$
+
+      - However, if we allow parallelization here using multiple processors then it would be:
+        - $W(n) = W(n/2) + c  = O(logn)$
+
+      - On the other hand, the span is calculated while considering the as many processor as it requires by definition. So, it is same as 3d. That means, 
+        
         - $S(n) = S(n/2) + c = O(logn)$
   
