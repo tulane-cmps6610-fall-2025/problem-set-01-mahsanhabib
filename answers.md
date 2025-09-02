@@ -175,52 +175,93 @@ Place all written answers from `assignment-01.md` here for easier grading.
 
   - 1g. Consider the definition of "Little o" notation:
   
-$g(n) \in o(f(n))$ means that for **every** positive constant $c$, there exists a constant $n_0$ such that $g(n) \le c \cdot f(n)$ for all $n \ge n_0$. There is an analogous definition for "little omega" $\omega(f(n))$. The distinction between $o(f(n))$ and $O(f(n))$ is that the former requires the condition to be met for **every** $c$, not just for some $c$. For example, $10x \in o(x^2)$, but $10x^2 \notin o(x^2)$.  
-
-.  
+$g(n) \in o(f(n))$ means that for **every** positive constant $c$, there exists a constant $n_0$ such that $g(n) < c \cdot f(n)$ for all $n \ge n_0$. There is an analogous definition for "little omega" $\omega(f(n))$. The distinction between $o(f(n))$ and $O(f(n))$ is that the former requires the condition to be met for **every** $c$, not just for some $c$. For example, $10x \in o(x^2)$, but $10x^2 \notin o(x^2)$.  
 
 **Prove** that $o(g(n)) \cap \omega(g(n))$ is the empty set.
 
   - ***Proof***
-    - $f(n) \in o(g(n))$ means that for **every** $c > 0$, there exists $n_0$ such that $f(n) \leq c \cdot g(n)$ for all $n \geq n_0$.
-    - $f(n) \in \omega(g(n))$ means that for **every** $c > 0$, there exists $n_0$ such that $f(n) \geq c \cdot g(n)$ for all $n \geq n_0$.
+  - $f(n) \in o(g(n))$ means that for **every** $c > 0$, there exists $n_0$ such that $f(n) < c \cdot g(n)$ for all $n \geq n_0$.
+    - $f(n) \in \omega(g(n))$ means that for **every** $c > 0$, there exists $n_0$ such that $f(n) > c \cdot g(n)$ for all $n \geq n_0$.
 
     Suppose, for contradiction, that there exists a function $f(n)$ such that $f(n) \in o(g(n)) \cap \omega(g(n))$.
 
     Then, by definition:
-    - For every $c > 0$, $f(n) \leq c \cdot g(n)$ for all sufficiently large $n$.
-    - For every $c > 0$, $f(n) \geq c \cdot g(n)$ for all sufficiently large $n$.
+    - For every $c > 0$, $f(n) < c \cdot g(n)$ for all sufficiently large $n$.
+    - For every $c > 0$, $f(n) > c \cdot g(n)$ for all sufficiently large $n$.
 
     Take $c = 1$. Then for large $n$,
     $$
-    f(n) \leq g(n) \quad \text{and} \quad f(n) \geq g(n)
+    f(n) < g(n) \quad \text{and} \quad f(n) > g(n)
     $$
-    So $f(n) = g(n)$ for all sufficiently large $n$.
+    So $f(n) = g(n)$ cannot be possible.
 
-    Now take $c = 1/2$. Then for large $n$,
-    $$
-    f(n) \leq \frac{1}{2}g(n) \quad \text{and} \quad f(n) \geq \frac{1}{2}g(n)
-    $$
-    So $f(n) = \frac{1}{2}g(n)$ for all sufficiently large $n$.
-
-    But this is only possible if $g(n) = 0$ for large $n$, which is not generally the case for nontrivial $g(n)$.
-
-    Therefore, no function can be in both $o(g(n))$ and $\omega(g(n))$ unless $g(n)$ is eventually zero, so:
+    Therefore, no function can be in both $o(g(n))$ and $\omega(g(n))$, so:
     $$
     o(g(n)) \cap \omega(g(n)) = \emptyset
     $$
 
 2. **SPARC to Python**
 
-  - 2b
+  - 2b. What does the $foo$ function do, in your own words?
+
+    - ***Answer***
+        
+        The $foo$ function is simply giving the maximum value of those given two numbers.
+
+        *Note*: However, if we put the min value (here x) when we can the $foo$ recursively, it will work as a *GCD* function.
+
+  - 2c. what is the work and span of $foo$?
+    
+    - ***Answer***
+
+      - Work:  
+        The work is total number of recursive calls of $foo$ function. In the worst case, the number of recursive calls is $O(logn)$, where n = max(a, b). Each call (min, max, mod, and comparison) does constant *c* work.  
+        Formally, we can write it like:  
+          - Base: $W(0) = c$ 
+           - Step: $W(n) = W(n \ \text{mod} \ m) + c$ 
+           
+        So work = $O(logn)$.
+      - Span:
+        The span (critical path length) is the longest sequence of dependent computations. Since each recursive call depends on the result of the previous call, the calls are sequential, not parallel. 
+        Formally, we can write it like:  
+          - Base: $S(0) = c$  
+          - Step: $S(n) = S(n \ \text{mod} \ m) + c$ 
+
+        So, span = $O(logn)$.
+
 
 3. **Parallelism and recursion**
 
-  - 3b
+  - 3b. What is the Work and Span of the iterative *longest_run* algorithm?
+    - ***Answer***
 
-  - 3d
+      - Work: 
+        The work is total number of iterations throughout the entire list. So it should be O(n) for n length of $mylist$. Formally, we can write it like:  
+          - $W(n) = W(n-1) + 1$ 
+        
+        So the work should be $O(n)$. 
 
-  - 3e
-  
-4. **GCD**
+      - Span:
+        As it is purely sequential, so span is also $O(n)$.
+
+
+  - 3d. What is the Work and Span of the iterative *longest_run_recursive* algorithm?
+    - ***Answer***
+
+      - Work: 
+        Every time we split the list into two parts until there is a single item and then we combine them with some additional operations. So, for $n$ length of $mylist$, we can write:  
+          - $W(n) = 2 \cdot W(n/2) + c$
+
+        So, the work should be $O(n)$.
+
+      - Span: Here, the recursive calls are independent, so can run in parallel. We can write:  
+          - $S(n) = S(n/2) + c$  
+        
+        So, the span should be $O(logn)$.
+
+  - 3e. Assume that we parallelize in a similar way we did with *sum_list_recursive*. That is, each recursive call spawns a new thread. What is the Work and Span of this algorithm?
+    - ***Answer***
+      - By parallelizing the function, I think the work and span should be the same as 3d. As per definition of work, we only have one processor to complete the task, so parallelization doesn't benifit here. On the other hand, the span is calculated while considering the as many processor as it requires by definition. So, both are same. That means, 
+        - $W(n) = 2 \cdot W(n/2) + c  = O(n)$
+        - $S(n) = S(n/2) + c = O(logn)$
   

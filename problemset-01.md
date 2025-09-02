@@ -91,7 +91,9 @@ $$
 ~~~~\texttt{elseif}{}~~b = 0 ~~\texttt{then}{}\\
 ~~~~~~~~a\\   
 ~~~~\texttt{else}\\
-~~~~~~~~\texttt{let}{}~~(x, y) = (\min(a, b)~~,~~(\max(a, b))~~\texttt{in}{}\\  
+~~~~~~~~\texttt{let}{}\\
+~~~~~~~~~~~~(x, y) = (\min(a, b)~~,~~(\max(a, b))\\
+~~~~~~~~\texttt{in}{}\\  
 ~~~~~~~~~~~~(\mathit{foo}~~ y ~~, ~~y\mod x)\\  
 ~~~~~~~~\texttt{end}{}.\\
 \end{array}
